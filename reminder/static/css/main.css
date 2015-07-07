@@ -112,9 +112,9 @@ body {
 #content .content_header {
 	background: #E8EBEE;
 	margin-bottom: 3em;
-	padding: 2.5em 0.5em;
-	text-align: center;
+	padding: 2.5em 0.5em 2em 7em;
 }
+
 
 #content h1 {
 	color: #373737;
