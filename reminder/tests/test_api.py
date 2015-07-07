@@ -62,3 +62,9 @@ class ReminderTests(APITestCase):
         r1.save()
         url = reverse('trigger_now')
         self.client.post(url, {'id': 1}, format='json')
+
+    def test_delete(self):
+        r1 = Reminder(user=self.u)
+        r1.save()
+        url = reverse('delete')
+        self.client.delete(url, {'id': 1}, format='json')

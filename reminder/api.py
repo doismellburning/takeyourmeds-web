@@ -53,3 +53,11 @@ def trigger_now(request):
     reminder = Reminder.objects.get(pk=pk)
     reminder.dispatch_task()
     return Response({"message": "Triggered",})
+
+
+@api_view(['DELETE'])
+def delete(request):
+    pk = request.data.get('id')
+    reminder = Reminder.objects.get(pk=pk)
+    reminder.delete()
+    return Response({"message": "Deleted",})

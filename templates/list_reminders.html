@@ -16,6 +16,7 @@
 
                 <h3><span class="meta">Send to</span> {{ reminder.telnumber }} </h3>
                 <a class="trigger submit" data-reminder-id={{ reminder.id }}>Test</a>
+                <a class="delete submit" data-reminder-id={{ reminder.id }}>Delete</a>
 
             </div>
 
@@ -67,6 +68,24 @@ $('body').on('click', '.trigger', function(event) {
     target.attr('disabled', 'disabled');
 })
 </script>
-
+<script>
+$('body').on('click', '.delete', function(event) {
+    var target=$(event.target);
+    var id = target.data('reminder-id');
+    console.log(target)
+    $.ajax({
+        url: "/reminder/delete/",
+        type: "delete",
+        data: "id="+id,
+        success: function() {
+            target.text('Deleted')
+            target.attr('disabled', 'disabled');
+            target.parent().parent().fadeOut(650, function() { $(this).remove(); });
+        }
+    });
+    target.text('Deleted');
+    target.attr('disabled', 'disabled');
+})
+</script>
 
     {% endblock extra_js%}
