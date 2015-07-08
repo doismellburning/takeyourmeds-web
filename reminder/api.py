@@ -55,9 +55,9 @@ def trigger_now(request):
     return Response({"message": "Triggered",})
 
 
-@api_view(['DELETE'])
-def delete(request):
-    pk = request.data.get('id')
-    reminder = Reminder.objects.get(pk=pk)
-    reminder.delete()
-    return Response({"message": "Deleted",})
+# @api_view(['DELETE'])
+# def delete(request):
+#     pk = request.data.get('id')
+#     reminder = Reminder.objects.get(pk=pk)
+#     reminder.delete()
+#     return Response({"message": "Deleted",})
