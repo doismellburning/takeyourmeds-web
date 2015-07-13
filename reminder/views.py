@@ -9,7 +9,11 @@ from .models import Reminder
 
 @login_required
 def new_reminder(request):
-    return render(request, 'new_reminder.html')
+
+    if hasattr(request.user, "subscription"):
+        return render(request, 'new_reminder.html')
+    else:
+        return render(request, 'please_subscribe.html')
 
 
 @login_required
