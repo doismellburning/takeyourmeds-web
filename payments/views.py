@@ -4,6 +4,8 @@ from django.conf import settings
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import FormView, TemplateView
 
+from .models import Subscription
+
 from .forms import StripeForm
 
 
@@ -32,6 +34,12 @@ class SubscribeView(StripeMixin, FormView):
         }
         customer = stripe.Customer.create(**customer_data)
 
-        customer.subscriptions.create(plan="four-pound-a-manth")
+        subscription = customer.subscriptions.create(plan="four-pound-a-manth")
+
+        s = Subscription(stripe_subscription_id=subscription.id,owner_id=self.request.user.id)
+        s.save()
+        print s.id
+        print s.stripe_subscription_id
+        print s.owner
 
         return super(SubscribeView, self).form_valid(form)

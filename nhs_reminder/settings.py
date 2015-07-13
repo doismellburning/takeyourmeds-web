@@ -43,7 +43,8 @@ INSTALLED_APPS = (
     'djcelery',
     'rest_framework',
     'allauth',
-    'allauth.account'
+    'allauth.account',
+    'payments'
 )
 
 MIDDLEWARE_CLASSES = (
