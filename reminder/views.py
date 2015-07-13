@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.contrib import messages
+from django.views.generic import FormView, TemplateView
 from .models import Reminder
 
 @login_required
