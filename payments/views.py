@@ -1,8 +1,10 @@
 import stripe
 
 from django.conf import settings
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
 from django.views.generic import FormView, TemplateView
+from django.http import HttpResponseRedirect
+from django.contrib import messages
 
 from .models import Subscription
 
@@ -19,6 +21,9 @@ class StripeMixin(object):
 
 class SuccessView(TemplateView):
     template_name = 'payments/thank_you.html'
+
+    def get(self, request):
+        return HttpResponseRedirect(reverse("reminder_new"))
 
 
 class SubscribeView(StripeMixin, FormView):
@@ -40,4 +45,5 @@ class SubscribeView(StripeMixin, FormView):
         s = Subscription(stripe_subscription_id=subscription.id,owner_id=self.request.user.id)
         s.save()
 
+        messages.success(self.request, 'Your subscription has been setup succesfully')
         return super(SubscribeView, self).form_valid(form)
