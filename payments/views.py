@@ -13,6 +13,7 @@ class StripeMixin(object):
     def get_context_data(self, **kwargs):
         context = super(StripeMixin, self).get_context_data(**kwargs)
         context['publishable_key'] = settings.STRIPE_PUBLIC_KEY
+        context['email'] = self.request.user.email
         return context
 
 
@@ -38,8 +39,5 @@ class SubscribeView(StripeMixin, FormView):
 
         s = Subscription(stripe_subscription_id=subscription.id,owner_id=self.request.user.id)
         s.save()
-        print s.id
-        print s.stripe_subscription_id
-        print s.owner
 
         return super(SubscribeView, self).form_valid(form)

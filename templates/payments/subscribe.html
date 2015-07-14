@@ -35,13 +35,14 @@
 
       <article>
         <label>
-          <span>Amount is $5.00</span>
+          <span>Amount is £5.00</span>
         </label>
       </article>
 
       <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
               data-key="{{ publishable_key }}"
-              data-description="A Flask Charge"
+              data-email="{{ email }}"
+              data-description="Monthly Subscription"
               data-amount="500"></script>
 
       <input type="hidden" name="stripe_token" />
