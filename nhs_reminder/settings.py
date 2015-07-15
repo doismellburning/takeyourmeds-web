@@ -96,16 +96,6 @@ SITE_ID = 1
 
 LOGIN_REDIRECT_URL = "/"
 
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -131,11 +121,22 @@ djcelery.setup_loader()
 BROKER_URL = 'redis://localhost:6379/0'
 
 
-# SECURITY WARNING: keep the secret key used in production secret!
-try:
-    from .local_settings import *
-except ImportError:
-    raise RuntimeError(
-        "SECRET_KEY missing. Add to local_settings.py. "
-        "Make sure it's at least 50 random characters."
-    )
+import django12factor
+custom_settings = [
+    'STRIPE_PUBLIC_KEY',
+    'STRIPE_SECRET_KEY',
+    'TW_ACCOUNT_SID',
+    'TW_ACCOUNT_SID',
+    'TW_AUTH_TOKEN',
+]
+d12f = django12factor.factorise()
+
+ALLOWED_HOSTS = d12f['ALLOWED_HOSTS']
+DATABASES = d12f['DATABASES']
+DEBUG = d12f['DEBUG']
+SECRET_KEY = d12f['SECRET_KEY']
+STRIPE_PUBLIC_KEY = d12f.get('STRIPE_PUBLIC_KEY', 'pk_test_KVrAfaHNBkN15KR1Oi8pLWL6')
+STRIPE_SECRET_KEY = d12f.get('STRIPE_SECRET_KEY', 'sk_test_cPNACljvxG4Uw8BnEH2Fi90N')
+TW_ACCOUNT_SID = d12f.get('TW_ACCOUNT_SID', 'xxxxx')
+TW_AUTH_TOKEN = d12f.get('TW_AUTH_TOKEN', 'xxxxx')
+TW_FROM_NUMBER = d12f.get('TW_FROM_NUMBER', '+44....')
