@@ -122,7 +122,7 @@ djcelery.setup_loader()
 
 
 import django12factor
-custom_settings = [
+_custom_settings = [
     'BROKER_URL',
     'STRIPE_PUBLIC_KEY',
     'STRIPE_SECRET_KEY',
@@ -130,7 +130,7 @@ custom_settings = [
     'TW_ACCOUNT_SID',
     'TW_AUTH_TOKEN',
 ]
-d12f = django12factor.factorise()
+d12f = django12factor.factorise(custom_settings=_custom_settings)
 
 ALLOWED_HOSTS = d12f['ALLOWED_HOSTS']
 BROKER_URL = d12f.get('BROKER_URL', 'redis://localhost:6379/0')
