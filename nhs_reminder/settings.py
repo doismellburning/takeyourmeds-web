@@ -119,11 +119,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
 
 import djcelery
 djcelery.setup_loader()
-BROKER_URL = 'redis://localhost:6379/0'
 
 
 import django12factor
 custom_settings = [
+    'BROKER_URL',
     'STRIPE_PUBLIC_KEY',
     'STRIPE_SECRET_KEY',
     'TW_ACCOUNT_SID',
@@ -133,6 +133,7 @@ custom_settings = [
 d12f = django12factor.factorise()
 
 ALLOWED_HOSTS = d12f['ALLOWED_HOSTS']
+BROKER_URL = d12f.get('BROKER_URL', 'redis://localhost:6379/0')
 DATABASES = d12f['DATABASES']
 DEBUG = d12f['DEBUG']
 SECRET_KEY = d12f['SECRET_KEY']
